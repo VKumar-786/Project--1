@@ -180,65 +180,79 @@
 </footer>
 
 <script>
-document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent the form from submitting
+    // Array of valid credentials
+    var validCredentials = [
+        { username: "user", password: "password" },
+        { username: "admin", password: "admin123" },
+        { username: "guest", password: "guestpass" }
+    ];
 
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    if (username === "user" && password === "password") {
-        window.location.href = "main.html"; // Redirect to main content page
-    } else {
-        alert("Invalid username or password. Please try again.");
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        // Check if the entered credentials match any valid credentials
+        var isValid = validCredentials.some(function(cred) {
+            return cred.username === username && cred.password === password;
+        });
+
+        if (isValid) {
+            window.location.href = "main.html"; // Redirect to main content page
+        } else {
+            alert("Invalid username or password. Please try again.");
+        }
+    });
+
+    document.getElementById("register-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        var password = document.getElementById("new-password").value;
+        var confirmPassword = document.getElementById("confirm-password").value;
+
+        if (password === confirmPassword) {
+            alert("Registration successful!");
+        } else {
+            alert("Passwords do not match. Please try again.");
+        }
+    });
+
+    function showContainer(containerId) {
+        var containers = document.querySelectorAll(".container");
+        for (var i = 0; i < containers.length; i++) {
+            containers[i].classList.remove("active");
+        }
+        document.getElementById(containerId).classList.add("active");
+        changeBackground(containerId);
     }
-});
 
-document.getElementById("register-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent the form from submitting
-
-    var password = document.getElementById("new-password").value;
-    var confirmPassword = document.getElementById("confirm-password").value;
-
-    if (password === confirmPassword) {
-        alert("Registration successful!");
-    } else {
-        alert("Passwords do not match. Please try again.");
+    function changeBackground(containerId) {
+        switch (containerId) {
+            case 'home-container':
+                document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?home')";
+                break;
+            case 'login-container':
+                document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?login')";
+                break;
+            case 'register-container':
+                document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?signup')";
+                break;
+            case 'about-container':
+                document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?about')";
+                break;
+            case 'contact-container':
+                document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?contact')";
+                break;
+            default:
+                document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?default')";
+                break;
+        }
     }
-});
 
-function showContainer(containerId) {
-    var containers = document.querySelectorAll(".container");
-    for (var i = 0; i < containers.length; i++) {
-        containers[i].classList.remove("active");
-    }
-    document.getElementById(containerId).classList.add("active");
-    changeBackground(containerId);
-}
-
-function changeBackground(containerId) {
-    switch (containerId) {
-        case 'home-container':
-            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?home')";
-            break;
-        case 'login-container':
-            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?login')";
-            break;
-        case 'register-container':
-            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?signup')";
-            break;
-        case 'about-container':
-            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?about')";
-            break;
-        case 'contact-container':
-            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?contact')";
-            break;
-        default:
-            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?default')";
-            break;
-    }
-}
-
-// Initialize with home container visible
-showContainer('home-container');
+    // Initialize with home container visible
+    showContainer('home-container');
 </script>
 </body>
 </html>
+
