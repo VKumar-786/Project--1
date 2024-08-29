@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Content - Self-Billing System</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #333;
+        color: #fff;
+    }
+    header {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    header h1 {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        color: #ffd700;
+    }
+    nav {
+        display: flex;
+        gap: 15px;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    nav a:hover {
+        color: #ffd700;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        padding: 30px;
+        text-align: center;
+    }
+    .content {
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 100%;
+        max-width: 800px;
+        backdrop-filter: blur(10px);
+    }
+    h2 {
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        color: #ffd700;
+    }
+    .welcome-message {
+        font-size: 2em;
+        color: #ffd700;
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 30px;
+    }
+    .info-box {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .info-box h3 {
+        margin-top: 0;
+        color: #ffd700;
+    }
+    .start-shopping-button {
+        margin-top: 30px;
+        width: 80%;
+        max-width: 300px;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #ffd700;
+        color: #000;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2em;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+    }
+    .start-shopping-button:hover {
+        background-color: #ffcc00;
+    }
+    input[type="button"] {
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-color: #ffd700;
+        color: #000;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    input[type="button"]:hover {
+        background-color: #ffcc00;
+    }
+    #barcode {
+        width: 80%;
+        padding: 12px;
+        font-size: 16px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 2px solid #ffd700;
+        background-color: #222;
+        color: #ffd700;
+        box-sizing: border-box;
+    }
+    #scanner-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    #checkout-items {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .profile-info p {
+        margin: 10px 0;
+    }
+    .profile-info span {
+        font-weight: normal;
+    }
+    #edit-profile-form label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    #edit-profile-form input[type="text"],
+    #edit-profile-form input[type="email"],
+    #edit-profile-form input[type="tel"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 2px solid #ffd700;
+        background-color: #222;
+        color: #ffd700;
+        box-sizing: border-box;
+    }
+    #settings-form label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    #settings-form input[type="text"],
+    #settings-form input[type="email"],
+    #settings-form input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 2px solid #ffd700;
+        background-color: #222;
+        color: #ffd700;
+        box-sizing: border-box;
+    }
+    #thank-you-message {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.9);
+        color: #ffd700;
+        font-size: 2em;
+        font-family: 'Montserrat', sans-serif;
+        text-align: center;
+        z-index: 1000;
+        display: none;
+    }
+    .qr-code {
+        margin: 20px auto;
+        width: 200px;
+        height: 200px;
+        border: 2px solid #ffd700;
+        border-radius: 10px;
+        background: #222;
+    }
+    .qr-code img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Self-Billing System</h1>
+    <nav>
+        <a href="#" onclick="showContainer('dashboard-container')">Dashboard</a>
+        <a href="#" onclick="showProfile()">Profile</a>
+        <a href="#" onclick="showSettings()">Settings</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<!-- Dashboard container -->
+<div class="container" id="dashboard-container" style="display:block;">
+    <div class="content">
+        <div class="welcome-message">Welcome to the Self-Billing System!</div>
+        <div class="info-box">
+            <h3>System Overview</h3>
+            <p>Here you can manage your shopping experience, scan products, view your cart, and proceed to checkout.</p>
+        </div>
+        <div class="info-box">
+            <h3>Recent Activity</h3>
+            <p>Check out your recent scans, purchases, and more right here.</p>
+        </div>
+        <button class="start-shopping-button" onclick="startShopping()">Start Shopping</button>
+    </div>
+</div>
+
+<!-- Profile container -->
+<div class="container" id="profile-container" style="display:none;">
+    <h2>User Profile</h2>
+    <div class="profile-info">
+        <p><strong>Username:</strong> <span id="username">VK</span></p>
+        <p><strong>Email:</strong> <span id="email">VK@example.com</span></p>
+        <p><strong>Phone:</strong> <span id="phone">+91 9876543210</span></p>
+        <p><strong>Address:</strong> <span id="address">Medchal, Telangana India</span></p>
+        <p><strong>Joined:</strong> <span id="joined-date">2024-01-01</span></p>
+    </div>
+    <input type="button" id="edit-profile-button" value="Edit Profile" onclick="showEditProfile()">
+    <input type="button" id="back-button" value="Back to Dashboard" onclick="showContainer('dashboard-container')">
+</div>
+
+<!-- Edit Profile container -->
+<div class="container" id="edit-profile-container" style="display:none;">
+    <h2>Edit Profile</h2>
+    <form id="edit-profile-form">
+        <label for="edit-username">Username:</label>
+        <input type="text" id="edit-username" value="JohnDoe" required><br>
+        <label for="edit-email">Email:</label>
+        <input type="email" id="edit-email" value="johndoe@example.com" required><br>
+        <label for="edit-phone">Phone:</label>
+        <input type="tel" id="edit-phone" value="+1234567890" required><br>
+        <label for="edit-address">Address:</label>
+        <input type="text" id="edit-address" value="1234 Elm Street, Some City, Some Country" required><br>
+        <input type="button" id="save-changes-button" value="Save Changes" onclick="saveProfile()">
+        <input type="button" id="cancel-edit-button" value="Cancel" onclick="showContainer('profile-container')">
+    </form>
+</div>
+
+<!-- Settings container -->
+<div class="container" id="settings-container" style="display:none;">
+    <h2>Settings</h2>
+    <form id="settings-form">
+        <label for="change-password">Change Password:</label>
+        <input type="password" id="change-password" placeholder="New Password" required><br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" placeholder="Confirm New Password" required><br>
+        <input type="button" id="save-settings-button" value="Save Settings" onclick="saveSettings()">
+        <input type="button" id="back-settings-button" value="Back to Dashboard" onclick="showContainer('dashboard-container')">
+    </form>
+</div>
+
+<!-- Scanner container -->
+<div class="container" id="scanner-container" style="display:none;">
+    <h2>Product Scanner</h2>
+    <form id="scanner-form">
+        <input type="text" id="barcode" placeholder="Enter Barcode" required><br>
+        <input type="button" id="scan-button" value="Scan">
+    </form>
+    <div class="product-details" id="product-details"></div>
+</div>
+
+<!-- Cart container -->
+<div class="container" id="cart-container" style="display:none;">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <input type="button" id="continue-shopping-button" value="Continue Shopping" onclick="startShopping()">
+    <input type="button" id="checkout-button" value="Proceed to Checkout">
+</div>
+
+<!-- Billing container -->
+<div class="container" id="billing-container" style="display:none;">
+    <h2>Billing</h2>
+    <div id="billing-details"></div>
+    <input type="button" id="to-checkout-button" value="Proceed to Checkout">
+</div>
+
+<!-- Checkout container -->
+<div class="container" id="checkout-container" style="display:none;">
+    <h2>Checkout</h2>
+    <div id="checkout-items"></div>
+    <p id="total-weight"></p>
+    <div class="qr-code">
+        <img src="https://via.placeholder.com/200x200.png?text=QR+Code" alt="QR Code">
+    </div>
+    <input type="button" id="complete-checkout-button" value="Complete Checkout">
+</div>
+
+<!-- Thank you message -->
+<div id="thank-you-message">Thank you for shopping with us!</div>
+
+<footer>
+    <p>&copy; 2024 Self-Billing System. All rights reserved.</p>
+</footer>
+
+<script>
+let scannedProducts = [];
+
+// Mock product database
+const productDatabase = {
+    "123456": { name: "Soap", price: 20, weight: "50g", discount: "5%", expiry: "2024-12-31" },
+    "789012": { name: "Shampoo", price: 120, weight: "200ml", discount: "10%", expiry: "2024-11-30" },
+    "345678": { name: "Toothpaste", price: 45, weight: "100g", discount: "8%", expiry: "2024-10-15" }
+};
+
+function startShopping() {
+    showContainer("scanner-container");
+    document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?scanner')";
+    clearScannerForm();
+}
+
+function showProfile() {
+    showContainer("profile-container");
+}
+
+function showEditProfile() {
+    showContainer("edit-profile-container");
+}
+
+function saveProfile() {
+    document.getElementById("username").innerText = document.getElementById("edit-username").value;
+    document.getElementById("email").innerText = document.getElementById("edit-email").value;
+    document.getElementById("phone").innerText = document.getElementById("edit-phone").value;
+    document.getElementById("address").innerText = document.getElementById("edit-address").value;
+
+    showContainer("profile-container");
+}
+
+function showSettings() {
+    showContainer("settings-container");
+}
+
+function saveSettings() {
+    // For simplicity, we'll assume password change is successful
+    alert("Settings saved successfully!");
+    showContainer("dashboard-container");
+}
+
+function logout() {
+    // Perform any necessary cleanup here (e.g., clearing session data)
+    alert("You have been logged out.");
+    // Redirect to the login page or initial page
+    window.location.href = 'login.html'; // Adjust as needed
+}
+
+document.getElementById("scan-button").addEventListener("click", function(event) {
+    event.preventDefault();
+    var barcode = document.getElementById("barcode").value;
+
+    if (productDatabase[barcode]) {
+        addToCart(barcode);
+        showContainer("cart-container");
+        displayCart();
+    } else {
+        alert("Product not found. Please check the barcode.");
+    }
+});
+
+document.getElementById("checkout-button").addEventListener("click", function() {
+    displayCart();
+    if (confirm("Are you ready to proceed to billing?")) {
+        showContainer("billing-container");
+        calculateTotal();
+    }
+});
+
+document.getElementById("to-checkout-button").addEventListener("click", function() {
+    displayCheckoutItems();
+    showContainer("checkout-container");
+});
+
+document.getElementById("complete-checkout-button").addEventListener("click", function() {
+    if (confirm("Do you want to complete the checkout?")) {
+        document.getElementById("thank-you-message").style.display = "flex";
+        setTimeout(() => {
+            document.getElementById("thank-you-message").style.display = "none";
+            // Reset the system or navigate to another page
+            showContainer("dashboard-container");
+        }, 2000);
+    }
+});
+
+function addToCart(barcode) {
+    var product = productDatabase[barcode];
+    var productDetailsHTML = `
+        <p><strong>Barcode:</strong> ${barcode}</p>
+        <p><strong>Name:</strong> ${product.name}</p>
+    `;
+    
+    var productDetails = document.getElementById("product-details");
+    productDetails.innerHTML = productDetailsHTML;
+
+    var fullProductDetailsHTML = `
+        <p><strong>Barcode:</strong> ${barcode}</p>
+        <p><strong>Name:</strong> ${product.name}</p>
+        <p><strong>Price:</strong> ${product.price} INR</p>
+        <p><strong>Weight:</strong> ${product.weight}</p>
+        <p><strong>Discount:</strong> ${product.discount}</p>
+        <p><strong>Expiry Date:</strong> ${product.expiry}</p>
+    `;
+    scannedProducts.push({barcode: barcode, productHTML: fullProductDetailsHTML, price: product.price, discount: product.discount, weight: product.weight});
+}
+
+function calculateTotal() {
+    var totalAmount = 0;
+    var totalDiscount = 0;
+
+    for (var i = 0; i < scannedProducts.length; i++) {
+        var price = scannedProducts[i].price;
+        var discount = parseFloat(scannedProducts[i].discount);
+        var discountedAmount = price * (discount / 100);
+        
+        totalAmount += price;
+        totalDiscount += discountedAmount;
+    }
+
+    var finalBill = totalAmount - totalDiscount;
+    var billingDetails = document.getElementById("billing-details");
+    billingDetails.innerHTML = `
+        <p><strong>Total Price:</strong> ${totalAmount} INR</p>
+        <p><strong>Total Discount:</strong> ${totalDiscount.toFixed(2)} INR</p>
+        <p><strong>Final Bill:</strong> ${finalBill.toFixed(2)} INR</p>
+    `;
+}
+
+function showContainer(containerId) {
+    var containers = document.querySelectorAll(".container");
+    for (var i = 0; i < containers.length; i++) {
+        containers[i].style.display = "none";
+    }
+    document.getElementById(containerId).style.display = "block";
+}
+
+function clearScannerForm() {
+    document.getElementById("scanner-form").reset();
+    document.getElementById("product-details").innerHTML = "";
+}
+
+function displayCart() {
+    var cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = scannedProducts.map(item => item.productHTML).join('');
+}
+
+function displayCheckoutItems() {
+    var totalWeight = scannedProducts.reduce((total, item) => {
+        let weight = item.weight;
+        if (weight.endsWith('g')) {
+            return total + parseFloat(weight);
+        } else if (weight.endsWith('ml')) {
+            return total + parseFloat(weight);
+        }
+        return total;
+    }, 0);
+
+    document.getElementById("total-weight").innerText = `Total Weight: ${totalWeight.toFixed(2)} g`;
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Billing System</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        transition: background-image 0.5s ease-in-out;
+        color: #fff;
+    }
+    header {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    header h1 {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        color: #ffd700;
+    }
+    nav {
+        display: flex;
+        gap: 15px;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    nav a:hover {
+        color: #ffd700;
+    }
+    .container {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        padding: 30px;
+        text-align: center;
+    }
+    .container.active {
+        display: flex;
+    }
+    .content {
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 100%;
+        max-width: 600px;
+        backdrop-filter: blur(10px);
+    }
+    h2 {
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        color: #ffd700;
+    }
+    input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="submit"], input[type="button"] {
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+    input[type="submit"], input[type="button"] {
+        background-color: #ffd700;
+        color: #000;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    input[type="submit"]:hover, input[type="button"]:hover {
+        background-color: #ffcc00;
+    }
+    footer {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px 20px;
+        text-align: center;
+        color: #fff;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Self-Billing System</h1>
+    <nav>
+        <a href="#" onclick="showContainer('home-container')">Home</a>
+        <a href="#" onclick="showContainer('login-container')">Login</a>
+        <a href="#" onclick="showContainer('register-container')">Sign Up</a>
+        <a href="#" onclick="showContainer('about-container')">About Us</a>
+        <a href="#" onclick="showContainer('contact-container')">Contact Us</a>
+    </nav>
+</header>
+
+<div class="container" id="home-container">
+    <div class="content">
+        <h2>Welcome to ScanEase Retail Solutions</h2>
+        <p>"Empowering Retailers, Delighting Customers"</p>
+        <p>At ScanEase, we believe in revolutionizing the retail experience through seamless self-billing technology. Say goodbye to long queues and manual billing hassles—our innovative solution streamlines the checkout process, making shopping a breeze for both retailers and customers.</p>
+        <h3>Our Mission</h3>
+        <p>Our mission is simple: to transform the way people shop by leveraging cutting-edge technology. We're committed to enhancing operational efficiency for retailers while providing an exceptional and convenient shopping experience for customers.</p>
+        <h3>Why Choose ScanEase?</h3>
+        <ul>
+            <li><strong>Efficiency:</strong> Say goodbye to long checkout lines. With ScanEase, billing is quick, easy, and hassle-free.</li>
+            <li><strong>Convenience:</strong> Shop at your own pace. Our self-billing system allows you to scan and pay for items effortlessly, right from your smartphone.</li>
+            <li><strong>Innovation:</strong> We're at the forefront of retail technology, constantly evolving to meet the changing needs of the industry.</li>
+            <li><strong>Customer Satisfaction:</strong> Your satisfaction is our priority. We're dedicated to delivering top-notch service and support at every step of the way.</li>
+        </ul>
+        <h3>How It Works</h3>
+        <ol>
+            <li><strong>Scan:</strong> Use our app to scan the barcode of each item you wish to purchase.</li>
+            <li><strong>Review:</strong> Double-check your selections and make any necessary adjustments.</li>
+            <li><strong>Pay:</strong> Complete your transaction securely using your preferred payment method.</li>
+            <li><strong>Go:</strong> Receive your digital receipt and exit the store without waiting in line.</li>
+        </ol>
+        <input type="button" value="Start Shopping" onclick="showContainer('login-container')">
+    </div>
+</div>
+
+<div class="container" id="login-container">
+    <div class="content">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+
+<div class="container" id="register-container">
+    <div class="content">
+        <h2>Sign Up</h2>
+        <form id="register-form">
+            <input type="text" id="full-name" placeholder="Full Name" required><br>
+            <input type="text" id="new-username" placeholder="Username" required><br>
+            <input type="tel" id="phone-number" placeholder="Phone Number" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="new-password" placeholder="Password" required><br>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required><br>
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+</div>
+
+<div class="container" id="about-container">
+    <div class="content">
+        <h2>About Us</h2>
+        <p>Welcome to ScanEase Retail Solutions, where we're dedicated to revolutionizing the retail experience through innovative self-billing technology. With a deep understanding of the challenges faced by both retailers and customers in traditional manual billing processes, we set out on a mission to transform the way people shop.</p>
+        <p>Our journey began with a simple yet powerful idea: to streamline the checkout process by leveraging cutting-edge technology. We envisioned a future where customers could breeze through their shopping journey without the frustration of long queues and tedious manual billing procedures.</p>
+        <p>Driven by this vision, we embarked on the development of a self-billing system that combines the convenience of barcode scanning with an intuitive app interface. Our solution empowers shoppers to effortlessly scan products, view detailed information, and complete transactions seamlessly—all from the palm of their hand.</p>
+        <p>But our commitment doesn't stop there. We understand that success in retail hinges not only on efficiency but also on exceptional customer experience. That's why ScanEase Retail Solutions is dedicated to continuously refining and enhancing our technology to meet the evolving needs of both retailers and consumers.</p>
+        <p>With a focus on scalability, reliability, and security, ScanEase Retail Solutions is paving the way for a new era of retail—one where shopping is not just a transaction but an experience to be enjoyed.</p>
+    </div>
+</div>
+
+<div class="container" id="contact-container">
+    <div class="content">
+        <h2>Contact Us</h2>
+        <p>Have any questions? Reach out to us at:</p>
+        <p>Email: support@selfbilling.com</p>
+        <p>Phone: +91 93749 26583</p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Self-Billing System. All rights reserved.</p>
+</footer>
+
+<script>
+document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    if (username === "user" && password === "password") {
+        window.location.href = "main.html"; // Redirect to main content page
+    } else {
+        alert("Invalid username or password. Please try again.");
+    }
+});
+
+document.getElementById("register-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    var password = document.getElementById("new-password").value;
+    var confirmPassword = document.getElementById("confirm-password").value;
+
+    if (password === confirmPassword) {
+        alert("Registration successful!");
+    } else {
+        alert("Passwords do not match. Please try again.");
+    }
+});
+
+function showContainer(containerId) {
+    var containers = document.querySelectorAll(".container");
+    for (var i = 0; i < containers.length; i++) {
+        containers[i].classList.remove("active");
+    }
+    document.getElementById(containerId).classList.add("active");
+    changeBackground(containerId);
+}
+
+function changeBackground(containerId) {
+    switch (containerId) {
+        case 'home-container':
+            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?home')";
+            break;
+        case 'login-container':
+            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?login')";
+            break;
+        case 'register-container':
+            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?signup')";
+            break;
+        case 'about-container':
+            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?about')";
+            break;
+        case 'contact-container':
+            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?contact')";
+            break;
+        default:
+            document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?default')";
+            break;
+    }
+}
+
+// Initialize with home container visible
+showContainer('home-container');
+</script>
+</body>
+</html>
